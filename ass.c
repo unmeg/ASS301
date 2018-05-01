@@ -33,6 +33,26 @@ int BruteForceMedian(int A[]){
     }
 }
 
+int Median(int A[]){
+
+}
+
+int Select(int A[], int l, int m, int h){
+    // Returns the value at index m in array sliceA[l..h]
+    // if the slice were sorted into nondecreasing order
+    int pos = Partition(A, l, h);
+
+    if (pos == m){
+        return A[pos];
+    } else if (pos > m) {
+        return Select(A, l, m, pos-1);
+    } else if (pos < m) {
+        return Select(A, pos + 1, m, h)
+    }
+
+    
+}
+
 void print_array(int array[]){
     printf("[ ");
     for(int i = 0; i < ARRAY_SIZE; ++i){
@@ -64,3 +84,4 @@ int main(int argc, char *argv[]) {
     printf("MEDIAN: %d\n", median);
 
 }
+
