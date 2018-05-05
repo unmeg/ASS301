@@ -34,7 +34,13 @@ int BruteForceMedian(int A[]){
 }
 
 int Median(int A[]){
-
+    // Returns the median value in a given array of n numbers
+    if(ARRAY_LENGTH==1){
+        return A[0];
+    } else {
+        return Select(A, 0, (int)floor(ARRAY_LENGTH/2), ARRAY_LENGTH-1);
+    }
+    
 }
 
 int Select(int A[], int l, int m, int h){
@@ -49,8 +55,31 @@ int Select(int A[], int l, int m, int h){
     } else if (pos < m) {
         return Select(A, pos + 1, m, h)
     }
-
     
+}
+
+void swap(int *first, int *second) {
+    int temp;
+
+    temp = *first;
+    *first = *second;  
+    *second = temp;  
+
+}
+
+int Partition(int A[], int l, int h){
+    int pivotval = A[l];
+    int pivotloc = l;
+    
+    for(int j = 0; j <= l+1; j++){ // check this -- j in l+1?
+        if(A[j] < pivotval){
+        pivotloc = pivotloc + 1;
+            swap(&A[pivotloc], &A[j]); // swap elements around pivot
+        }
+    }
+    
+    swap(&A[l], &A[pivotloc]);
+    return pivotloc;
 }
 
 void print_array(int array[]){
