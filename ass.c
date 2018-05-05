@@ -53,7 +53,7 @@ int Select(int A[], int l, int m, int h){
     } else if (pos > m) {
         return Select(A, l, m, pos-1);
     } else if (pos < m) {
-        return Select(A, pos + 1, m, h)
+        return Select(A, pos + 1, m, h);
     }
     
 }
