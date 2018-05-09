@@ -71,7 +71,7 @@ int Partition(int A[], int l, int h){
     int pivotval = A[l];
     int pivotloc = l;
     
-    for(int j = 0; j <= l+1; j++){ // check this -- j in l+1?
+    for(int j = l+1; j < h; j++){ // check this -- j in l+1?
         if(A[j] < pivotval){
         pivotloc = pivotloc + 1;
             swap(&A[pivotloc], &A[j]); // swap elements around pivot
