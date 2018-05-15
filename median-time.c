@@ -4,7 +4,7 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 
+#define NUM_EXPERIMENTS 100 
 
 int debug = 1; // turn print statements off with 0
 int ARRAY_SIZE = 3;
@@ -119,7 +119,7 @@ void run_experiment(int type){
     // Start the clock
     start = clock();
 
-        median = Median(A);
+    median = Median(A);
     
     // Stop the clock
     finish = clock();
@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
     for (int experiments = 0; experiments < NUM_EXPERIMENTS; experiments++){
 
         if(debug){
-            printf("Experiment %d..", experiments);
+            printf("Experiment %d..\n", experiments);
             counter++;
         }
 
@@ -183,10 +183,10 @@ int main(int argc, char *argv[]) {
     average = execution_time / NUM_EXPERIMENTS; // gives us average execution time
    
 
-    write_to_file("times.csv", average, ARRAY_SIZE);
+    write_to_file("median_times_reverse.csv", average, ARRAY_SIZE);
 
     if(debug){
-        printf("Average execution time after %d trials: %f seconds\n", counter, average);
+        printf("\nAverage execution time after %d trials: %f seconds\n", counter, average);
     }
     
     printf("MEDIAN: %d\n", median);

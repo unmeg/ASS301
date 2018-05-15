@@ -8,5 +8,5 @@ for i in `seq 2 1000`; # array size 2 to 100
                 #     ./ass 1 $i
                 # fi
                 echo $i
-                ./brute-time 2 $i
+                ./median-comps 1 $i
         done  

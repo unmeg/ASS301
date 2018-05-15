@@ -4,7 +4,7 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 
+#define NUM_EXPERIMENTS 100 
 
 int debug = 1; // turn print statements off with 0
 int ARRAY_SIZE = 3;
@@ -56,11 +56,12 @@ int Partition(int A[], int l, int h){
     int pivotval = A[l];
     int pivotloc = l;
     
-    for(int j = l+1; j <= h; j++){ // check this -- j in l+1?
+    for(int j = l+1; j <= h; j++){ 
         if(A[j] < pivotval){
         pivotloc = pivotloc + 1;
             swap(&A[pivotloc], &A[j]); // swap elements around pivot
         }
+        comp_count++; // TODO confirm correct
     }
     
     swap(&A[l], &A[pivotloc]);
@@ -165,7 +166,7 @@ int main(int argc, char *argv[]) {
     for (int experiments = 0; experiments < NUM_EXPERIMENTS; experiments++){
 
         if(debug){
-            printf("Experiment %d..", experiments);
+            printf("Experiment %d..\n", experiments);
             counter++;
         }
 
@@ -178,8 +179,8 @@ int main(int argc, char *argv[]) {
         printf("Comps: %d\n", comp_count/NUM_EXPERIMENTS);
     }
 
-    write_to_file("comps.csv",comp_count/NUM_EXPERIMENTS, ARRAY_SIZE);   
+    write_to_file("median_comps_random.csv",comp_count/NUM_EXPERIMENTS, ARRAY_SIZE);   
     
-    printf("MEDIAN: %d\n", median);
+    printf("\nMEDIAN: %d\n", median);
 
 }
