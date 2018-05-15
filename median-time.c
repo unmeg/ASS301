@@ -155,7 +155,7 @@ void write_to_file(char *filename, double value, int array_size){
 int main(int argc, char *argv[]) {
     int A[ARRAY_SIZE];
     double average;
-    int counter = NUM_EXPERIMENTS;
+    int counter = 0;
     int type = 1;
     char *p;
     

@@ -4,14 +4,16 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 // TODO: Figure out if we want this to be a constant, a variable (for tests) 
-// if we take the sizeof(array)/sizeof(array[0]) when the array has just been declared, rather than once
-// it's been passed, we can has as global var
+#define NUM_EXPERIMENTS 1 
+
 int debug = 1; // turn print statements off with 0
 int ARRAY_SIZE = 10;
 int comp_count = 0; // keep track of comps
 int median = 0;
 double execution_time = 0;
+
+// counters
+int partition_comp_count = 0, brute_comp_count1 = 0, brute_comp_count2 = 0;
 
 // Function signatures
 int BruteForceMedian(int A[]);
@@ -31,12 +33,14 @@ int BruteForceMedian(int A[]){
         int numequal = 0; // How many elements are equal to A[i]
 
             for(int j = 0; j < ARRAY_SIZE; j++){
-                comp_count++;
+                brute_comp_count1++;
                 if(A[j] < A[i]){
                     numsmaller++;
                 } else if(A[j] == A[i]){
                     numequal++;
                 }
+
+                brute_comp_count2++;
             }
 
             if( (numsmaller < k) && k <= (numsmaller + numequal) ){ // numsmaller is less than k and total is greater 
@@ -90,6 +94,7 @@ int Partition(int A[], int l, int h){
         pivotloc = pivotloc + 1;
             swap(&A[pivotloc], &A[j]); // swap elements around pivot
         }
+        partition_comp_count++;
     }
     
     swap(&A[l], &A[pivotloc]);
@@ -148,8 +153,8 @@ void run_experiment(int type){
     // Start the clock
     start = clock();
 
-        // BruteForceMedian(A);
-        median = Median(A);
+        median = BruteForceMedian(A);
+        // median = Median(A);
     
     // Stop the clock
     finish = clock();
@@ -217,10 +222,13 @@ int main(int argc, char *argv[]) {
 
     if(debug){
         printf("Average execution time after %d trials: %f seconds\n", counter, average);
-        printf("Comps: %d\n", comp_count/NUM_EXPERIMENTS);
+        // printf("Comps: %d\n", comp_count/NUM_EXPERIMENTS);
+        printf("Brute1 comps: %d\n", brute_comp_count1/NUM_EXPERIMENTS);
+        printf("Brute2 comps: %d\n", brute_comp_count2/NUM_EXPERIMENTS);
+        printf("Partition comps: %d\n", partition_comp_count/NUM_EXPERIMENTS);
     }
 
-    write_to_file("comps.csv",comp_count/NUM_EXPERIMENTS, ARRAY_SIZE);   
+    write_to_file("comps.csv",brute_comp_count1/NUM_EXPERIMENTS, ARRAY_SIZE);   
     
     printf("MEDIAN: %d\n", median);
 

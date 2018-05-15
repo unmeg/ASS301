@@ -4,10 +4,10 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 
+#define NUM_EXPERIMENTS 100
 
 int debug = 1; // turn print statements off with 0
-int ARRAY_SIZE = 3;
+int ARRAY_SIZE = 100;
 int comp_count = 0; // keep track of comps
 int median = 0;
 
@@ -26,12 +26,14 @@ int BruteForceMedian(int A[]){
         int numequal = 0; // How many elements are equal to A[i]
 
             for(int j = 0; j < ARRAY_SIZE; j++){
-                comp_count++;
+                
                 if(A[j] < A[i]){
                     numsmaller++;
                 } else if(A[j] == A[i]){
                     numequal++;
                 }
+
+                comp_count++;
             }
 
             if( (numsmaller < k) && k <= (numsmaller + numequal) ){ // numsmaller is less than k and total is greater 
@@ -121,7 +123,7 @@ void write_to_file(char *filename, double value, int array_size){
 int main(int argc, char *argv[]) {
     int A[ARRAY_SIZE];
     double average;
-    int counter = NUM_EXPERIMENTS;
+    int counter = 0;
     int type = 1;
     char *p;
     
@@ -147,12 +149,11 @@ int main(int argc, char *argv[]) {
     }
 
     if(debug){
-        printf("Average execution time after %d trials: %f seconds\n", counter, average);
         printf("Comps: %d\n", comp_count/NUM_EXPERIMENTS);
+        printf("MEDIAN: %d\n", median);
     }
 
-    write_to_file("comps.csv",comp_count/NUM_EXPERIMENTS, ARRAY_SIZE);   
+    write_to_file("comps_brute_sorted.csv",comp_count/NUM_EXPERIMENTS, ARRAY_SIZE);   
     
-    printf("MEDIAN: %d\n", median);
 
 }

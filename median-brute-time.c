@@ -4,7 +4,7 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 
+#define NUM_EXPERIMENTS 100 
 
 int debug = 1; // turn print statements off with 0
 int ARRAY_SIZE = 3;
@@ -120,7 +120,7 @@ void write_to_file(char *filename, double value, int array_size){
     fclose(fp);
     
     if(debug){
-        printf("\n %s done", filename);
+        printf("\n %s done\n", filename);
     }
  
 }
@@ -128,7 +128,7 @@ void write_to_file(char *filename, double value, int array_size){
 int main(int argc, char *argv[]) {
     int A[ARRAY_SIZE];
     double average;
-    int counter = NUM_EXPERIMENTS;
+    int counter = 0;
     int type = 1;
     char *p;
     
@@ -145,7 +145,7 @@ int main(int argc, char *argv[]) {
     for (int experiments = 0; experiments < NUM_EXPERIMENTS; experiments++){
 
         if(debug){
-            printf("Experiment %d..", experiments);
+            printf("Experiment %d..\n", experiments);
             counter++;
         }
 
@@ -156,10 +156,10 @@ int main(int argc, char *argv[]) {
     average = execution_time / NUM_EXPERIMENTS; // gives us average execution time
    
 
-    write_to_file("times.csv", average, ARRAY_SIZE);
+    write_to_file("brute_times_sorted.csv", average, ARRAY_SIZE);
 
     if(debug){
-        printf("Average execution time after %d trials: %f seconds\n", counter, average);
+        printf("\nAverage execution time after %d trials: %f seconds\n", counter, average);
     }
     
     printf("MEDIAN: %d\n", median);
