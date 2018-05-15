@@ -4,20 +4,15 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 // TODO: Figure out if we want this to be a constant, a variable (for tests) 
-// if we take the sizeof(array)/sizeof(array[0]) when the array has just been declared, rather than once
-// it's been passed, we can has as global var
+#define NUM_EXPERIMENTS 1 
+
 int debug = 1; // turn print statements off with 0
-int ARRAY_SIZE = 10;
+int ARRAY_SIZE = 3;
 int comp_count = 0; // keep track of comps
 int median = 0;
-double execution_time = 0;
 
 // Function signatures
 int BruteForceMedian(int A[]);
-int Median(int A[]);
-int Select(int A[], int l, int m, int h);
-int Partition(int A[], int l, int h);
 void swap(int *first, int *second);
 
 /*
@@ -44,56 +39,6 @@ int BruteForceMedian(int A[]){
             }
 
     }
-}
-
-int Median(int A[]){
-    // Returns the median value in a given array of n numbers
-    if(ARRAY_SIZE==1){
-        return A[0];
-    } else {
-        return Select(A, 0, (int)floor(ARRAY_SIZE/2), ARRAY_SIZE-1);
-    }
-    
-}
-
-int Select(int A[], int l, int m, int h){
-    // Returns the value at index m in array sliceA[l..h]
-    // if the slice were sorted into nondecreasing order
-    int pos = Partition(A, l, h);
-
-    if (pos == m){ 
-        return A[pos]; 
-    } else if (pos > m) {
-        return Select(A, l, m, pos-1); 
-    } else if (pos < m) {
-        return Select(A, pos + 1, m, h);
-    }
-    
-}
-
-// May need to be part of the function instead of a separate function
-void swap(int *first, int *second) {
-    int temp;
-
-    temp = *first;
-    *first = *second;  
-    *second = temp;  
-
-}
-
-int Partition(int A[], int l, int h){
-    int pivotval = A[l];
-    int pivotloc = l;
-    
-    for(int j = l+1; j <= h; j++){ // check this -- j in l+1?
-        if(A[j] < pivotval){
-        pivotloc = pivotloc + 1;
-            swap(&A[pivotloc], &A[j]); // swap elements around pivot
-        }
-    }
-    
-    swap(&A[l], &A[pivotloc]);
-    return pivotloc;
 }
 
 void print_array(int array[]){
@@ -145,17 +90,8 @@ void run_experiment(int type){
         printf("\n");
     }
     
-    // Start the clock
-    start = clock();
-
-        // BruteForceMedian(A);
-        median = Median(A);
+    median = BruteForceMedian(A);
     
-    // Stop the clock
-    finish = clock();
-
-    execution_time = execution_time + ((double)(finish - start)) / CLOCKS_PER_SEC;
-
     if(debug){
         printf("Final array: \n");
         print_array(A);
@@ -209,11 +145,6 @@ int main(int argc, char *argv[]) {
         run_experiment(type);
         
     }
-
-    average = execution_time / NUM_EXPERIMENTS; // gives us average execution time
-   
-
-    write_to_file("times.csv", average, ARRAY_SIZE);
 
     if(debug){
         printf("Average execution time after %d trials: %f seconds\n", counter, average);

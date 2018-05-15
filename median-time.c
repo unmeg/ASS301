@@ -4,47 +4,18 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 // TODO: Figure out if we want this to be a constant, a variable (for tests) 
-// if we take the sizeof(array)/sizeof(array[0]) when the array has just been declared, rather than once
-// it's been passed, we can has as global var
+#define NUM_EXPERIMENTS 1 
+
 int debug = 1; // turn print statements off with 0
-int ARRAY_SIZE = 10;
-int comp_count = 0; // keep track of comps
+int ARRAY_SIZE = 3;
 int median = 0;
 double execution_time = 0;
 
 // Function signatures
-int BruteForceMedian(int A[]);
 int Median(int A[]);
 int Select(int A[], int l, int m, int h);
 int Partition(int A[], int l, int h);
 void swap(int *first, int *second);
-
-/*
-* Returns the median value in a given array A of n numbers
-* This is the kth element, where k = abs(n/2), if array were sorted
-*/
-int BruteForceMedian(int A[]){
-    int k = (int)ceil(ARRAY_SIZE/2.0); // 9/2 = 5 so we want ceiling; cast to int because it returns a double
-    for(int i = 0; i < ARRAY_SIZE; i++){
-        int numsmaller = 0; // How many elements are smaller than A[i]
-        int numequal = 0; // How many elements are equal to A[i]
-
-            for(int j = 0; j < ARRAY_SIZE; j++){
-                comp_count++;
-                if(A[j] < A[i]){
-                    numsmaller++;
-                } else if(A[j] == A[i]){
-                    numequal++;
-                }
-            }
-
-            if( (numsmaller < k) && k <= (numsmaller + numequal) ){ // numsmaller is less than k and total is greater 
-                return A[i];
-            }
-
-    }
-}
 
 int Median(int A[]){
     // Returns the median value in a given array of n numbers
@@ -148,7 +119,6 @@ void run_experiment(int type){
     // Start the clock
     start = clock();
 
-        // BruteForceMedian(A);
         median = Median(A);
     
     // Stop the clock
@@ -217,10 +187,7 @@ int main(int argc, char *argv[]) {
 
     if(debug){
         printf("Average execution time after %d trials: %f seconds\n", counter, average);
-        printf("Comps: %d\n", comp_count/NUM_EXPERIMENTS);
     }
-
-    write_to_file("comps.csv",comp_count/NUM_EXPERIMENTS, ARRAY_SIZE);   
     
     printf("MEDIAN: %d\n", median);
 
