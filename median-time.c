@@ -111,7 +111,7 @@ void run_experiment(int type){
     }
     
     if(debug){
-        printf("Initial array: \n");
+        printf("\nInitial array: \n");
         print_array(A);
         printf("\n");
     }

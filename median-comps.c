@@ -116,7 +116,7 @@ void run_experiment(int type){
         printf("\n");
     }
     
-    median = BruteForceMedian(A);
+    median = Median(A);
     
     if(debug){
         printf("Final array: \n");
@@ -161,6 +161,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    // Runs the experiments
     for (int experiments = 0; experiments < NUM_EXPERIMENTS; experiments++){
 
         if(debug){
