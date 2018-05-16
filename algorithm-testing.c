@@ -5,7 +5,7 @@
 #include <math.h>
 
 int debug = 1; // turn print statements off with 0
-int ARRAY_SIZE = 3;
+int ARRAY_SIZE = 9;
 
 // Function signatures
 int BruteForceMedian(int A[]);
@@ -22,6 +22,11 @@ int check_median(int A[], int median, int type);
 */
 int BruteForceMedian(int A[]){
     int k = (int)ceil(ARRAY_SIZE/2.0); // 9/2 = 5 so we want ceiling; cast to int because it returns a double
+    if(debug){
+        printf("Median location: %d\n", k);
+
+    }
+
     for(int i = 0; i < ARRAY_SIZE; i++){
         int numsmaller = 0; // How many elements are smaller than A[i]
         int numequal = 0; // How many elements are equal to A[i]
@@ -47,6 +52,9 @@ int Median(int A[]){
     if(ARRAY_SIZE==1){
         return A[0];
     } else {
+        if(debug){
+            printf("Median location: %d\n", (int)floor(ARRAY_SIZE/2.0));
+        }
         return Select(A, 0, (int)floor(ARRAY_SIZE/2.0), ARRAY_SIZE-1);
     }
     
@@ -146,35 +154,24 @@ void sort(int A[]){
 int check_median(int A[], int median, int type){
     int result = 0;
     sort(A);
-    if (type==1){
-        // brute force
-       int median_index = (int)ceil(ARRAY_SIZE/2.0);
+    printf("Sorted array: ");
+    print_array(A);
 
-        if(A[median_index] == median){
-            printf("Median given: %d, median found: %d\n", median, A[median_index]);
-            printf("Successful sort!");
-            result = 1;
-        } else {
-            printf("Median given: %d, median found: %d\n", median, A[median_index]);
-            printf("Failure!");
-            result = 0;
-        }
-
-
-    } else {
-        // Median
-        int median_index = (int)floor(ARRAY_SIZE/2.0);
-
-        if(A[median_index] == median){
-            printf("Median given: %d, median found: %d\n", median, A[median_index]);
-            printf("Successful sort!");
-            result = 1;
-        } else {
-            printf("Median given: %d, median found: %d\n", median, A[median_index]);
-            printf("Failure!");
-            result = 0;
-        }
+    int median_index = (int)floor(ARRAY_SIZE/2.0);
+    if(debug){
+    printf("Median index: %d\n", median_index);
     }
+
+    if(A[median_index] == median){
+        printf("Median given: %d, median found: %d\n", median, A[median_index]);
+        printf("Successful sort!");
+        result = 1;
+    } else {
+        printf("Median given: %d, median found: %d\n", median, A[median_index]);
+        printf("Failure!");
+        result = 0;
+    }
+   
     return result;
 }
 
@@ -184,7 +181,7 @@ int main(int argc, char *argv[]) {
     int B[ARRAY_SIZE];
     double average;
     int type;
-    int algo = 2; // brute:1, median:2
+    int algo = 1; // brute:1, median:2
     char *p;
     int median = 0;
     

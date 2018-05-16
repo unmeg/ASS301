@@ -7,7 +7,7 @@
 #define NUM_EXPERIMENTS 1 
 
 int debug = 1; // turn print statements off with 0
-int ARRAY_SIZE = 10;
+int ARRAY_SIZE = 4;
 int comp_count = 0; // keep track of comps
 int median = 0;
 double execution_time = 0;
@@ -153,7 +153,7 @@ void run_experiment(int type){
     // Start the clock
     start = clock();
 
-        median = BruteForceMedian(A);
+    median = BruteForceMedian(A);
         // median = Median(A);
     
     // Stop the clock
