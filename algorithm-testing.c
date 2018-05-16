@@ -4,16 +4,8 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 
-
 int debug = 1; // turn print statements off with 0
-int ARRAY_SIZE = 4;
-int comp_count = 0; // keep track of comps
-int median = 0;
-double execution_time = 0;
-
-// counters
-int partition_comp_count = 0, brute_comp_count1 = 0, brute_comp_count2 = 0;
+int ARRAY_SIZE = 9;
 
 // Function signatures
 int BruteForceMedian(int A[]);
@@ -21,6 +13,8 @@ int Median(int A[]);
 int Select(int A[], int l, int m, int h);
 int Partition(int A[], int l, int h);
 void swap(int *first, int *second);
+void sort(int A[]);
+int check_median(int A[], int median, int type);
 
 /*
 * Returns the median value in a given array A of n numbers
@@ -28,19 +22,22 @@ void swap(int *first, int *second);
 */
 int BruteForceMedian(int A[]){
     int k = (int)ceil(ARRAY_SIZE/2.0); // 9/2 = 5 so we want ceiling; cast to int because it returns a double
+    if(debug){
+        printf("Median location: %d\n", k);
+
+    }
+
     for(int i = 0; i < ARRAY_SIZE; i++){
         int numsmaller = 0; // How many elements are smaller than A[i]
         int numequal = 0; // How many elements are equal to A[i]
 
             for(int j = 0; j < ARRAY_SIZE; j++){
-                brute_comp_count1++;
+                
                 if(A[j] < A[i]){
                     numsmaller++;
                 } else if(A[j] == A[i]){
                     numequal++;
                 }
-
-                brute_comp_count2++;
             }
 
             if( (numsmaller < k) && k <= (numsmaller + numequal) ){ // numsmaller is less than k and total is greater 
@@ -55,7 +52,10 @@ int Median(int A[]){
     if(ARRAY_SIZE==1){
         return A[0];
     } else {
-        return Select(A, 0, (int)floor(ARRAY_SIZE/2), ARRAY_SIZE-1);
+        if(debug){
+            printf("Median location: %d\n", (int)floor(ARRAY_SIZE/2.0));
+        }
+        return Select(A, 0, (int)floor(ARRAY_SIZE/2.0), ARRAY_SIZE-1);
     }
     
 }
@@ -94,7 +94,6 @@ int Partition(int A[], int l, int h){
         pivotloc = pivotloc + 1;
             swap(&A[pivotloc], &A[j]); // swap elements around pivot
         }
-        partition_comp_count++;
     }
     
     swap(&A[l], &A[pivotloc]);
@@ -107,66 +106,6 @@ void print_array(int array[]){
         printf("%d ", array[i]);
     }
     printf("]\n");
-}
-
-void run_experiment(int type){
-    int A[ARRAY_SIZE];
-    clock_t start, finish;
-
-    // Make a random array
-    switch(type){
-        case 1: // random
-
-            srand(time(NULL));
-            
-            for(int i = 0; i < ARRAY_SIZE; ++i){
-                A[i] = rand() % (ARRAY_SIZE*10) + 1; // Random number between 0 and 1000?
-            }
-
-            break;
-
-        case 2: // ordered
-
-            for(int i = 0; i < ARRAY_SIZE; ++i){
-                A[i] = i + 1; // Sequence of numbers
-            }
-
-            break;
-        
-        case 3: // reverse-ordered
-
-            for(int i = 0; i < ARRAY_SIZE; ++i){
-                A[i] = ARRAY_SIZE - i; // Sequence of numbers
-            }
-
-            break;
-
-        
-    }
-    
-    if(debug){
-        printf("Initial array: \n");
-        print_array(A);
-        printf("\n");
-    }
-    
-    // Start the clock
-    start = clock();
-
-    median = BruteForceMedian(A);
-        // median = Median(A);
-    
-    // Stop the clock
-    finish = clock();
-
-    execution_time = execution_time + ((double)(finish - start)) / CLOCKS_PER_SEC;
-
-    if(debug){
-        printf("Final array: \n");
-        print_array(A);
-        // should be a check array in here maybe
-    }
-    
 }
 
 void write_to_file(char *filename, double value, int array_size){
@@ -187,12 +126,64 @@ void write_to_file(char *filename, double value, int array_size){
  
 }
 
+void sort(int A[]){
+
+    int count = ARRAY_SIZE - 1; // number of pairs to be compared aka len
+    int sflag = 1; // swap flag (bool)
+
+    while(sflag == 1){
+        sflag = 0;
+        for (int j = 0; j <= (count-1); j++){
+            if (A[j + 1] < A[j] ){
+                // comp_count++; // track comparison
+                swap(&A[j], &A[j+1]);
+
+                // if(debug==1){
+                //     printf("%d swapped with %d\n", A[j], A[j+1]);
+                //     print_array(A);
+                // }
+                
+                sflag = 1;
+            }
+        }
+    count--;    
+    }
+
+}
+
+int check_median(int A[], int median, int type){
+    int result = 0;
+    sort(A);
+    printf("Sorted array: ");
+    print_array(A);
+
+    int median_index = (int)floor(ARRAY_SIZE/2.0);
+    if(debug){
+    printf("Median index: %d\n", median_index);
+    }
+
+    if(A[median_index] == median){
+        printf("Median given: %d, median found: %d\n", median, A[median_index]);
+        printf("Successful sort!");
+        result = 1;
+    } else {
+        printf("Median given: %d, median found: %d\n", median, A[median_index]);
+        printf("Failure!");
+        result = 0;
+    }
+   
+    return result;
+}
+
+
 int main(int argc, char *argv[]) {
     int A[ARRAY_SIZE];
+    int B[ARRAY_SIZE];
     double average;
-    int counter = NUM_EXPERIMENTS;
-    int type = 1;
+    int type;
+    int algo = 1; // brute:1, median:2
     char *p;
+    int median = 0;
     
      if(argc != 1){
         type = strtol(argv[1], &p, 10); // takes CL input and converts to string
@@ -204,32 +195,32 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    for (int experiments = 0; experiments < NUM_EXPERIMENTS; experiments++){
-
-        if(debug){
-            printf("Experiment %d..", experiments);
-            counter++;
-        }
-
-        run_experiment(type);
-        
+    // Random array:
+    srand(time(NULL));
+            
+    for(int i = 0; i < ARRAY_SIZE; ++i){
+        int val = rand() % (ARRAY_SIZE*10) + 1;
+        A[i] = val; // Random number between 0 and 1000?
+        B[i] = val;
     }
 
-    average = execution_time / NUM_EXPERIMENTS; // gives us average execution time
-   
-
-    write_to_file("times.csv", average, ARRAY_SIZE);
-
-    if(debug){
-        printf("Average execution time after %d trials: %f seconds\n", counter, average);
-        // printf("Comps: %d\n", comp_count/NUM_EXPERIMENTS);
-        printf("Brute1 comps: %d\n", brute_comp_count1/NUM_EXPERIMENTS);
-        printf("Brute2 comps: %d\n", brute_comp_count2/NUM_EXPERIMENTS);
-        printf("Partition comps: %d\n", partition_comp_count/NUM_EXPERIMENTS);
-    }
-
-    write_to_file("comps.csv",brute_comp_count1/NUM_EXPERIMENTS, ARRAY_SIZE);   
+    printf("Array A:\n");
+    print_array(A);
+    printf("Array B:\n");
+    print_array(B);
     
-    printf("MEDIAN: %d\n", median);
-
+    if(algo==1){
+        median = BruteForceMedian(A);
+        type=1;
+        printf("MEDIAN: %d\n", median);
+        check_median(B, median, type); // this checks array B (a duplicate of array A) to see if the value at the halfway point is
+    } else {
+        median = Median(A);
+        type=2;
+        printf("MEDIAN: %d\n", median);
+        check_median(B, median, type); // this checks array B (a duplicate of array A) to see if the value at the halfway point is
+    }
+   
+    
+    
 }
