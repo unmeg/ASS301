@@ -1,4 +1,4 @@
-all: brute_time brute_comps median_time median_comps
+all: brute_time brute_comps median_time median_comps algo_test
 
 brute_time: median-brute-time.c
 	gcc -o brute-time median-brute-time.c -lm
@@ -11,3 +11,6 @@ median_time: median-time.c
 
 median_comps: median-comps.c
 	gcc -o median-comps median-comps.c -lm
+
+algo_test: algorithm-testing.c
+	gcc -o algo-test algorithm-testing.c -lm
