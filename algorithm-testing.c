@@ -153,11 +153,17 @@ void sort(int A[]){
 
 int check_median(int A[], int median, int type){
     int result = 0;
+    int median_index = 0;
     sort(A);
     printf("Sorted array: ");
     print_array(A);
 
-    int median_index = (int)floor(ARRAY_SIZE/2.0);
+    if (type==1){ // brute
+        median_index = (int)ceil(ARRAY_SIZE/2.0) - 1;
+    } else {
+        median_index = (int)floor(ARRAY_SIZE/2.0);
+    }
+
     if(debug){
     printf("Median index: %d\n", median_index);
     }
@@ -181,7 +187,7 @@ int main(int argc, char *argv[]) {
     int B[ARRAY_SIZE];
     double average;
     int type;
-    int algo = 1; // brute:1, median:2
+    int algo = type; // brute:1, median:2
     char *p;
     int median = 0;
     

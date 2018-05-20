@@ -153,8 +153,8 @@ void run_experiment(int type){
     // Start the clock
     start = clock();
 
-    median = BruteForceMedian(A);
-        // median = Median(A);
+    // median = BruteForceMedian(A);
+        median = Median(A);
     
     // Stop the clock
     finish = clock();
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
     average = execution_time / NUM_EXPERIMENTS; // gives us average execution time
    
 
-    write_to_file("times.csv", average, ARRAY_SIZE);
+    // write_to_file("times.csv", average, ARRAY_SIZE);
 
     if(debug){
         printf("Average execution time after %d trials: %f seconds\n", counter, average);
@@ -228,7 +228,7 @@ int main(int argc, char *argv[]) {
         printf("Partition comps: %d\n", partition_comp_count/NUM_EXPERIMENTS);
     }
 
-    write_to_file("comps.csv",brute_comp_count1/NUM_EXPERIMENTS, ARRAY_SIZE);   
+    // write_to_file("comps.csv",brute_comp_count1/NUM_EXPERIMENTS, ARRAY_SIZE);   
     
     printf("MEDIAN: %d\n", median);
 
