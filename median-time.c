@@ -56,7 +56,7 @@ int Partition(int A[], int l, int h){
     int pivotval = A[l];
     int pivotloc = l;
     
-    for(int j = l+1; j <= h; j++){ // check this -- j in l+1?
+    for(int j = l+1; j <= h; j++){ 
         if(A[j] < pivotval){
         pivotloc = pivotloc + 1;
             swap(&A[pivotloc], &A[j]); // swap elements around pivot
@@ -86,7 +86,7 @@ void run_experiment(int type){
             srand(time(NULL));
             
             for(int i = 0; i < ARRAY_SIZE; ++i){
-                A[i] = rand() % (ARRAY_SIZE*10) + 1; // Random number between 0 and 1000?
+                A[i] = rand() % 1000 + 1; // Random number between 0 and 1000?
             }
 
             break;
@@ -183,7 +183,7 @@ int main(int argc, char *argv[]) {
     average = execution_time / NUM_EXPERIMENTS; // gives us average execution time
    
 
-    write_to_file("median_times_reverse.csv", average, ARRAY_SIZE);
+    write_to_file("median_times_random.csv", average, ARRAY_SIZE);
 
     if(debug){
         printf("\nAverage execution time after %d trials: %f seconds\n", counter, average);

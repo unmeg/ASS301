@@ -42,7 +42,22 @@ int Select(int A[], int l, int m, int h){
     
 }
 
-// May need to be part of the function instead of a separate function
+int Partition(int A[], int l, int h){
+    int pivotval = A[l];
+    int pivotloc = l;
+    
+    for(int j = l+1; j <= h; j++){ 
+        if(A[j] < pivotval){ // This is the basic operation
+        pivotloc = pivotloc + 1;
+            swap(&A[pivotloc], &A[j]);
+        }
+        comp_count++;
+    }
+    
+    swap(&A[l], &A[pivotloc]);
+    return pivotloc;
+}
+
 void swap(int *first, int *second) {
     int temp;
 
@@ -50,22 +65,6 @@ void swap(int *first, int *second) {
     *first = *second;  
     *second = temp;  
 
-}
-
-int Partition(int A[], int l, int h){
-    int pivotval = A[l];
-    int pivotloc = l;
-    
-    for(int j = l+1; j <= h; j++){ 
-        if(A[j] < pivotval){
-        pivotloc = pivotloc + 1;
-            swap(&A[pivotloc], &A[j]); // swap elements around pivot
-        }
-        comp_count++; // TODO confirm correct
-    }
-    
-    swap(&A[l], &A[pivotloc]);
-    return pivotloc;
 }
 
 void print_array(int array[]){
@@ -80,14 +79,13 @@ void run_experiment(int type){
     int A[ARRAY_SIZE];
     clock_t start, finish;
 
-    // Make a random array
     switch(type){
         case 1: // random
 
             srand(time(NULL));
             
             for(int i = 0; i < ARRAY_SIZE; ++i){
-                A[i] = rand() % (ARRAY_SIZE*10) + 1; // Random number between 0 and 1000?
+                A[i] = rand() % 1000 + 1; // Random number between 0 and 1000?
             }
 
             break;
@@ -107,7 +105,6 @@ void run_experiment(int type){
             }
 
             break;
-
         
     }
     
@@ -122,7 +119,6 @@ void run_experiment(int type){
     if(debug){
         printf("Final array: \n");
         print_array(A);
-        // should be a check array in here maybe
     }
     
 }
@@ -157,7 +153,7 @@ int main(int argc, char *argv[]) {
         ARRAY_SIZE  = strtol(argv[2], &p, 10);
 
         if(type > 3){
-            printf("Command line argument too big.\n\n./bs <type> is the syntax.\n\n");
+            printf("Command line argument too big.\n\n");
             exit(0);
         }
     }

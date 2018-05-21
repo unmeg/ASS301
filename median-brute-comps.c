@@ -131,7 +131,7 @@ int main(int argc, char *argv[]) {
         ARRAY_SIZE  = strtol(argv[2], &p, 10);
 
         if(type > 3){
-            printf("Command line argument too big.\n\n./bs <type> is the syntax.\n\n");
+            printf("Command line argument too big.\n\n.");
             exit(0);
         }
     }
@@ -152,7 +152,7 @@ int main(int argc, char *argv[]) {
         printf("MEDIAN: %d\n", median);
     }
 
-    write_to_file("comps_brute_sorted.csv",comp_count/NUM_EXPERIMENTS, ARRAY_SIZE);   
+    write_to_file("comps_brute_random.csv",comp_count/NUM_EXPERIMENTS, ARRAY_SIZE);   
     
 
 }

@@ -1,0 +1,11 @@
+This project has a makefile, which means you can compile everything using: make all
+
+This will generate .exes for brute_time, brute_comps, median_time, median_comps and algo_test.
+
+To run the brute_time, brute_comps, median_time and median_comps files, the syntax is: ./file-name <array_type> <array_size>
+
+To run the algorithm testing program, the syntax is: ./algo-test <algorithm type: 1 or 2> <array size>.
+
+To run the data generation script, simply type bash run-experiments.sh (having filled in the file name you wish to run)
+
+
