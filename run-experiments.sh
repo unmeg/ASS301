@@ -1,11 +1,11 @@
 #!/bin/bash
 
-for i in `seq 2 1000`; # array size 2 to 100
+for i in `seq 1 1000`; # array size 1 to 1000
         do
                 # n=$(($i%10000))
                 # if [ "$n" -eq "0" ]; then
                 #     echo $i;
-                #     ./ass 1 $i
+                #     ./median-comps 1 $i
                 # fi
                 echo $i
                 ./median-comps 1 $i

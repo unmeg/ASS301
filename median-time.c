@@ -9,7 +9,8 @@
 int debug = 1; // turn print statements off with 0
 int ARRAY_SIZE = 3;
 int median = 0;
-double execution_time = 0;
+double execution_time_brute = 0;
+double execution_time_med = 0;
 
 // Function signatures
 int Median(int A[]);
@@ -105,17 +106,9 @@ void run_experiment(int type){
                 A[i] = ARRAY_SIZE - i; // Sequence of numbers
             }
 
-            break;
-
+            break;        
+    }
         
-    }
-    
-    if(debug){
-        printf("\nInitial array: \n");
-        print_array(A);
-        printf("\n");
-    }
-    
     // Start the clock
     start = clock();
 
@@ -129,7 +122,6 @@ void run_experiment(int type){
     if(debug){
         printf("Final array: \n");
         print_array(A);
-        // should be a check array in here maybe
     }
     
 }
@@ -154,7 +146,7 @@ void write_to_file(char *filename, double value, int array_size){
 
 int main(int argc, char *argv[]) {
     int A[ARRAY_SIZE];
-    double average;
+    double average_brute, average_med;
     int counter = 0;
     int type = 1;
     char *p;
@@ -180,15 +172,19 @@ int main(int argc, char *argv[]) {
         
     }
 
-    average = execution_time / NUM_EXPERIMENTS; // gives us average execution time
+    average_brute = execution_time_brute / NUM_EXPERIMENTS; // gives us average execution time
+    average_med = execution_time_med / NUM_EXPERIMENTS; // gives us average execution time
    
+    printf("BRUTE MEDIAN: %d\n", median_brute);
+    printf("MEDIAN: %d\n", median_med);
 
-    write_to_file("median_times_random.csv", average, ARRAY_SIZE);
+    write_to_file("median_times.csv", average_med, ARRAY_SIZE);
+    write_to_file("brute_times.csv", average_brute, ARRAY_SIZE);
 
     if(debug){
-        printf("\nAverage execution time after %d trials: %f seconds\n", counter, average);
+        printf("\nAverage execution time for BFM after %d trials: %f seconds\n", counter, average_brute);
+        printf("\nAverage execution time for M after %d trials: %f seconds\n", counter, average_med);
     }
     
-    printf("MEDIAN: %d\n", median);
 
 }

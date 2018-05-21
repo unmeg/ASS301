@@ -1,0 +1,132 @@
+TESTING...
+Starting array: 
+[ 6 95 86 59 -91 60 79 -54 54 ]
+Median location: 5
+
+FOR I: 0, J: 0
+6 is equal to 6
+Numequal: 1
+
+FOR I: 0, J: 1
+
+FOR I: 0, J: 2
+
+FOR I: 0, J: 3
+
+FOR I: 0, J: 4
+-91 is smaller than 6
+Numsmaller: 1
+
+FOR I: 0, J: 5
+
+FOR I: 0, J: 6
+
+FOR I: 0, J: 7
+-54 is smaller than 6
+Numsmaller: 2
+
+FOR I: 0, J: 8 <<< this is a comparison with 54
+
+FOR I: 1, J: 0
+6 is smaller than 95
+Numsmaller: 1
+
+FOR I: 1, J: 1
+95 is equal to 95
+Numequal: 1
+
+FOR I: 1, J: 2
+86 is smaller than 95
+Numsmaller: 2
+
+FOR I: 1, J: 3
+59 is smaller than 95
+Numsmaller: 3
+
+FOR I: 1, J: 4
+-91 is smaller than 95
+Numsmaller: 4
+
+FOR I: 1, J: 5
+60 is smaller than 95
+Numsmaller: 5
+
+FOR I: 1, J: 6
+79 is smaller than 95
+Numsmaller: 6
+
+FOR I: 1, J: 7
+-54 is smaller than 95
+Numsmaller: 7
+
+FOR I: 1, J: 8
+54 is smaller than 95
+Numsmaller: 8
+
+FOR I: 2, J: 0
+6 is smaller than 86
+Numsmaller: 1
+
+FOR I: 2, J: 1
+
+FOR I: 2, J: 2
+86 is equal to 86
+Numequal: 1
+
+FOR I: 2, J: 3
+59 is smaller than 86
+Numsmaller: 2
+
+FOR I: 2, J: 4
+-91 is smaller than 86
+Numsmaller: 3
+
+FOR I: 2, J: 5
+60 is smaller than 86
+Numsmaller: 4
+
+FOR I: 2, J: 6
+79 is smaller than 86
+Numsmaller: 5
+
+FOR I: 2, J: 7
+-54 is smaller than 86
+Numsmaller: 6
+
+FOR I: 2, J: 8
+54 is smaller than 86
+Numsmaller: 7
+
+FOR I: 3, J: 0
+6 is smaller than 59
+Numsmaller: 1
+
+FOR I: 3, J: 1
+
+FOR I: 3, J: 2
+
+FOR I: 3, J: 3
+59 is equal to 59
+Numequal: 1
+
+FOR I: 3, J: 4
+-91 is smaller than 59
+Numsmaller: 2
+
+FOR I: 3, J: 5
+
+FOR I: 3, J: 6
+
+FOR I: 3, J: 7
+-54 is smaller than 59
+Numsmaller: 3
+
+FOR I: 3, J: 8
+54 is smaller than 59
+Numsmaller: 4
+
+if 4 is less than 5 and 5 is less than or equal to 5, return 59
+Sorted...
+[ -91 -54 6 54 59 60 79 86 95 ]
+median: 59
+
