@@ -4,7 +4,7 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 
+#define NUM_EXPERIMENTS 100 
 
 int debug = 1; // turn print statements off with 0
 int ARRAY_SIZE = 4;
@@ -27,14 +27,14 @@ void swap(int *first, int *second);
 * This is the kth element, where k = abs(n/2), if array were sorted
 */
 int BruteForceMedian(int A[]){
-    int k = (int)ceil(ARRAY_SIZE/2.0); // 9/2 = 5 so we want ceiling; cast to int because it returns a double
+    int k = (int)ceil(ARRAY_SIZE/2.0); 
     for(int i = 0; i < ARRAY_SIZE; i++){
-        int numsmaller = 0; // How many elements are smaller than A[i]
-        int numequal = 0; // How many elements are equal to A[i]
+        int numsmaller = 0; 
+        int numequal = 0;
 
             for(int j = 0; j < ARRAY_SIZE; j++){
                 
-                if(A[j] < A[i]){
+                if(A[j] < A[i]){ // This is the basic operation
                     numsmaller++;
                 } else if(A[j] == A[i]){
                     numequal++;
@@ -43,7 +43,7 @@ int BruteForceMedian(int A[]){
                brute_count++;
             }
 
-            if( (numsmaller < k) && k <= (numsmaller + numequal) ){ // numsmaller is less than k and total is greater 
+            if( (numsmaller < k) && k <= (numsmaller + numequal) ){ 
                 return A[i];
             }
 
@@ -75,7 +75,22 @@ int Select(int A[], int l, int m, int h){
     
 }
 
-// May need to be part of the function instead of a separate function
+int Partition(int A[], int l, int h){
+    int pivotval = A[l];
+    int pivotloc = l;
+    
+    for(int j = l+1; j <= h; j++){ 
+        if(A[j] < pivotval){ // This is the basic operation
+        pivotloc = pivotloc + 1;
+            swap(&A[pivotloc], &A[j]); 
+        }
+        med_count++;
+    }
+    
+    swap(&A[l], &A[pivotloc]);
+    return pivotloc;
+}
+
 void swap(int *first, int *second) {
     int temp;
 
@@ -83,22 +98,6 @@ void swap(int *first, int *second) {
     *first = *second;  
     *second = temp;  
 
-}
-
-int Partition(int A[], int l, int h){
-    int pivotval = A[l];
-    int pivotloc = l;
-    
-    for(int j = l+1; j <= h; j++){ // check this -- j in l+1?
-        if(A[j] < pivotval){
-        pivotloc = pivotloc + 1;
-            swap(&A[pivotloc], &A[j]); // swap elements around pivot
-        }
-        med_count++;
-    }
-    
-    swap(&A[l], &A[pivotloc]);
-    return pivotloc;
 }
 
 void print_array(int array[]){

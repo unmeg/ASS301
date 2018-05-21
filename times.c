@@ -4,7 +4,7 @@
 #include <time.h> // for 
 #include <math.h>
 
-#define NUM_EXPERIMENTS 1 
+#define NUM_EXPERIMENTS 100 
 
 int debug = 1; // turn print statements off with 0
 int ARRAY_SIZE = 4;
@@ -118,36 +118,27 @@ void run_experiment(int type){
 
     switch(type){
         case 1: // random
-
             srand(time(NULL));
-            
             for(int i = 0; i < ARRAY_SIZE; ++i){
                 int val = rand() % 1000 + 1; // Random number between 0 and 1000
                 A[i] = val; 
                 B[i] = val;
             }
-
             break;
-
         case 2: // ordered
 
             for(int i = 0; i < ARRAY_SIZE; ++i){
                 A[i] = i + 1; // Sequence of numbers
                 B[i] = i + 1;
             }
-
             break;
-        
         case 3: // reverse-ordered
 
             for(int i = 0; i < ARRAY_SIZE; ++i){
                 A[i] = ARRAY_SIZE - i; // Sequence of numbers
                 B[i] = ARRAY_SIZE - i;
             }
-
-            break;
-
-        
+            break;        
     }
     
     if(debug){
@@ -202,7 +193,7 @@ void write_to_file(char *filename, double value, int array_size){
 int main(int argc, char *argv[]) {
     int A[ARRAY_SIZE];
     double average_brute, average_med;
-    int counter = NUM_EXPERIMENTS;
+    int counter = 0;
     int type = 1;
     char *p;
     
