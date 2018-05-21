@@ -1,3 +1,7 @@
+/*
+* This program runs testing on BruteForceMedian and Median algorithms using Bubble Sort.
+*
+*/
 #include <stdio.h>
 #include <stdlib.h> // for rand
 #include <string.h>
@@ -22,22 +26,17 @@ int check_median(int A[], int median, int type);
 */
 int BruteForceMedian(int A[]){
     int k = (int)ceil(ARRAY_SIZE/2.0); // 9/2 = 5 so we want ceiling; cast to int because it returns a double
-    if(debug){
-        printf("Median location: %d\n", k);
-
-    }
-
     for(int i = 0; i < ARRAY_SIZE; i++){
         int numsmaller = 0; // How many elements are smaller than A[i]
         int numequal = 0; // How many elements are equal to A[i]
 
             for(int j = 0; j < ARRAY_SIZE; j++){
-                
+               
                 if(A[j] < A[i]){
                     numsmaller++;
                 } else if(A[j] == A[i]){
                     numequal++;
-                }
+                }    
             }
 
             if( (numsmaller < k) && k <= (numsmaller + numequal) ){ // numsmaller is less than k and total is greater 
@@ -52,10 +51,7 @@ int Median(int A[]){
     if(ARRAY_SIZE==1){
         return A[0];
     } else {
-        if(debug){
-            printf("Median location: %d\n", (int)floor(ARRAY_SIZE/2.0));
-        }
-        return Select(A, 0, (int)floor(ARRAY_SIZE/2.0), ARRAY_SIZE-1);
+        return Select(A, 0, (int)floor(ARRAY_SIZE/2), ARRAY_SIZE-1);
     }
     
 }
@@ -94,6 +90,7 @@ int Partition(int A[], int l, int h){
         pivotloc = pivotloc + 1;
             swap(&A[pivotloc], &A[j]); // swap elements around pivot
         }
+        
     }
     
     swap(&A[l], &A[pivotloc]);
@@ -135,14 +132,7 @@ void sort(int A[]){
         sflag = 0;
         for (int j = 0; j <= (count-1); j++){
             if (A[j + 1] < A[j] ){
-                // comp_count++; // track comparison
                 swap(&A[j], &A[j+1]);
-
-                // if(debug==1){
-                //     printf("%d swapped with %d\n", A[j], A[j+1]);
-                //     print_array(A);
-                // }
-                
                 sflag = 1;
             }
         }
@@ -158,9 +148,14 @@ int check_median(int A[], int median, int type){
     printf("Sorted array: ");
     print_array(A);
 
-    if (type==1){ // brute
+    // Adjusted median indexes, per algorithm
+    if (type==1){ // BruteForceMedian index
         median_index = (int)ceil(ARRAY_SIZE/2.0) - 1;
-    } else {
+        // NB: This has an offset of -1 because the algorithm
+        // tests numsmaller to see if it is LESS THAN k
+        // k = ceil(length/2), and thus we need our index
+        // to be k - 1.
+    } else { // Median index
         median_index = (int)floor(ARRAY_SIZE/2.0);
     }
 
@@ -170,11 +165,11 @@ int check_median(int A[], int median, int type){
 
     if(A[median_index] == median){
         printf("Median given: %d, median found: %d\n", median, A[median_index]);
-        printf("Successful sort!");
+        printf("Successful sort!\n");
         result = 1;
     } else {
         printf("Median given: %d, median found: %d\n", median, A[median_index]);
-        printf("Failure!");
+        printf("Failure!\n");
         result = 0;
     }
    
@@ -186,13 +181,13 @@ int main(int argc, char *argv[]) {
     int A[ARRAY_SIZE];
     int B[ARRAY_SIZE];
     double average;
-    int type;
-    int algo = type; // brute:1, median:2
+    int type = 0;
+    int algo = 0; // Sets algorithm type
     char *p;
     int median = 0;
     
      if(argc != 1){
-        type = strtol(argv[1], &p, 10); // takes CL input and converts to string
+        algo = strtol(argv[1], &p, 10); // which algorithm?
         ARRAY_SIZE  = strtol(argv[2], &p, 10);
 
         if(type > 3){
@@ -205,8 +200,8 @@ int main(int argc, char *argv[]) {
     srand(time(NULL));
             
     for(int i = 0; i < ARRAY_SIZE; ++i){
-        int val = rand() % (ARRAY_SIZE*10) + 1;
-        A[i] = val; // Random number between 0 and 1000?
+        int val = rand() % 1000 + 1; // Random number between 0 and 1000
+        A[i] = val; 
         B[i] = val;
     }
 
@@ -218,13 +213,13 @@ int main(int argc, char *argv[]) {
     if(algo==1){
         median = BruteForceMedian(A);
         type=1;
-        printf("MEDIAN: %d\n", median);
-        check_median(B, median, type); // this checks array B (a duplicate of array A) to see if the value at the halfway point is
+        printf("BRUTE FORCE MEDIAN: %d\n", median);
+        check_median(B, median, type); 
     } else {
         median = Median(A);
         type=2;
         printf("MEDIAN: %d\n", median);
-        check_median(B, median, type); // this checks array B (a duplicate of array A) to see if the value at the halfway point is
+        check_median(B, median, type); 
     }
    
     

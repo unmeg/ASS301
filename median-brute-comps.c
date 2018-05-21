@@ -20,14 +20,14 @@ void swap(int *first, int *second);
 * This is the kth element, where k = abs(n/2), if array were sorted
 */
 int BruteForceMedian(int A[]){
-    int k = (int)ceil(ARRAY_SIZE/2.0); // 9/2 = 5 so we want ceiling; cast to int because it returns a double
+    int k = (int)ceil(ARRAY_SIZE/2.0); 
     for(int i = 0; i < ARRAY_SIZE; i++){
         int numsmaller = 0; // How many elements are smaller than A[i]
         int numequal = 0; // How many elements are equal to A[i]
 
             for(int j = 0; j < ARRAY_SIZE; j++){
                 
-                if(A[j] < A[i]){
+                if(A[j] < A[i]){ // This is the basic operation
                     numsmaller++;
                 } else if(A[j] == A[i]){
                     numequal++;
@@ -36,7 +36,7 @@ int BruteForceMedian(int A[]){
                 comp_count++;
             }
 
-            if( (numsmaller < k) && k <= (numsmaller + numequal) ){ // numsmaller is less than k and total is greater 
+            if( (numsmaller < k) && k <= (numsmaller + numequal) ){
                 return A[i];
             }
 
@@ -62,7 +62,7 @@ void run_experiment(int type){
             srand(time(NULL));
             
             for(int i = 0; i < ARRAY_SIZE; ++i){
-                A[i] = rand() % (ARRAY_SIZE*10) + 1; // Random number between 0 and 1000?
+                A[i] = rand() % 1000 + 1; // Random number between 0 and 1000?
             }
 
             break;
@@ -97,7 +97,6 @@ void run_experiment(int type){
     if(debug){
         printf("Final array: \n");
         print_array(A);
-        // should be a check array in here maybe
     }
     
 }
